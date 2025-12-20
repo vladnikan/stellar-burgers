@@ -1,15 +1,37 @@
-import { useSelector } from '../../services/store';
+import { AppDispatch, useSelector } from '../../services/store';
 
 import styles from './constructor-page.module.css';
 
 import { BurgerIngredients } from '../../components';
 import { BurgerConstructor } from '../../components';
 import { Preloader } from '../../components/ui';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
+import {
+  fetchIngredients,
+  isIngredientLoading,
+  ingredientError
+} from '../../services/slices/ingredientSlice';
+import { useDispatch } from '../../services/store';
 
 export const ConstructorPage: FC = () => {
-  /** TODO: взять переменную из стора */
-  const isIngredientsLoading = false;
+  const dispatch = useDispatch();
+  /** TODO: взять переменную из стора
+   * ВЗЯЛ
+   */
+  const isIngredientsLoading = useSelector(isIngredientLoading);
+  const error = useSelector(ingredientError);
+
+  useEffect(() => {
+    dispatch(fetchIngredients());
+  }, [dispatch]);
+
+  if (error) {
+    return (
+      <p className='text text_type_main-large mt-10 text_type_main-default text_color_error'>
+        Ошибка загрузки ингредиентов: {error}
+      </p>
+    );
+  }
 
   return (
     <>
