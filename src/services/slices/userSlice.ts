@@ -1,13 +1,16 @@
 import {
   getUserApi,
   loginUserApi,
+  logoutApi,
   registerUserApi,
   TLoginData,
-  TRegisterData
+  TRegisterData,
+  updateUserApi
 } from '@api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TUser } from '@utils-types';
 import { RootState } from '../store';
+import { deleteCookie, setCookie } from '../../utils/cookie';
 
 interface UserState {
   user: TUser | null;
@@ -28,6 +31,7 @@ export const fetchUser = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const res = await getUserApi();
+
       return res.user;
     } catch (error: any) {
       return rejectWithValue(error.message);
@@ -40,6 +44,10 @@ export const login = createAsyncThunk(
   async (data: TLoginData, { rejectWithValue }) => {
     try {
       const res = await loginUserApi(data);
+
+      localStorage.setItem('refreshToken', res.refreshToken);
+      setCookie('accessToken', res.accessToken);
+
       return res.user;
     } catch (error: any) {
       return rejectWithValue(error.message);
@@ -52,12 +60,22 @@ export const register = createAsyncThunk(
   async (data: TRegisterData, { rejectWithValue }) => {
     try {
       const res = await registerUserApi(data);
+
+      localStorage.setItem('refreshToken', res.refreshToken);
+      setCookie('accessToken', res.accessToken);
+
       return res.user;
     } catch (error: any) {
       return rejectWithValue(error.message);
     }
   }
 );
+
+export const logout = createAsyncThunk('user/logout', async () => {
+  await logoutApi();
+  localStorage.removeItem('refreshToken');
+  deleteCookie('accessToken');
+});
 
 // export const forgotPassword = createAsyncThunk(
 //   'user/forgotPassword',
@@ -69,10 +87,13 @@ export const register = createAsyncThunk(
 //   async
 // )
 
-// export const updateUser = createAsyncThunk(
-//   'user/update',
-//   async
-// )
+export const updateUser = createAsyncThunk(
+  'user/update',
+  async (data: { name?: string; email?: string; password?: string }) => {
+    const responce = await updateUserApi(data);
+    return responce.user;
+  }
+);
 
 // export const logout = createAsyncThunk(
 //   'user/logout',
@@ -136,13 +157,20 @@ export const userSlice = createSlice({
         state.isLoading = false;
         state.isAuth = false;
         state.error = action.error.message ?? 'Error';
+      })
+
+      .addCase(logout.fulfilled, (state, action) => {
+        state.user = null;
+        state.isAuth = false;
       });
   }
 });
 
-export const { logout } = userSlice.actions;
+// export const { logout } = userSlice.actions;
 
 export const selectIsAuth = (state: RootState) => state.user.isAuth;
+export const selectUser = (state: RootState) => state.user.user;
+export const selectIsLoading = (state: RootState) => state.user.isLoading;
 
 //TODO: у нас уже есть состояние аунтификации, остается создать SecuredRoute, в который будем передавать это для нужных страниц, по идее, на этом мы закончим
 //в модалке заказов не отображается информация о заказе

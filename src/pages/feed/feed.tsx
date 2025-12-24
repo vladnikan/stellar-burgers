@@ -18,15 +18,19 @@ export const Feed: FC = () => {
     dispatch(getFeed());
   }, [dispatch]);
 
+  const handleRefresh = () => {
+    dispatch(getFeed());
+  };
+
   if (!feed) {
-    return <Preloader />;
+    return <Preloader/>;
   }
 
   // const orders: TOrder[] = [];
 
-  // if (!orders.length) {
+  // if (!feed.orders.length) {
   //   return <Preloader />;
   // }
 
-  return <FeedUI orders={feed.orders} handleGetFeeds={() => {}} />;
+  return <FeedUI orders={feed.orders} handleGetFeeds={handleRefresh} />;
 };

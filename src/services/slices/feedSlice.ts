@@ -45,3 +45,4 @@ export const feedSlice = createSlice({
 export const feedReducer = feedSlice.reducer;
 
 export const selectFeed = (state: RootState) => state.feed.data;
+export const selectFeedIsLoading = (state: RootState) => state.feed.isLoading;

@@ -17,6 +17,8 @@ export const FeedInfo: FC = () => {
   const feed = useSelector(selectFeed);
 
   const orders = feed?.orders ?? [];
+  const total = feed?.total ?? 0;
+  const totalToday = feed?.totalToday ?? 0;
   // const orders: TOrder[] = [];
   // const feed = {};
 
@@ -29,8 +31,8 @@ export const FeedInfo: FC = () => {
       readyOrders={readyOrders}
       pendingOrders={pendingOrders}
       feed={{
-        total: feed?.total ?? 0,
-        totalToday: feed?.totalToday ?? 0
+        total,
+        totalToday
       }}
     />
   );

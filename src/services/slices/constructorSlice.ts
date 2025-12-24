@@ -23,10 +23,14 @@ export const constructorSlice = createSlice({
         state.ingredients.push(action.payload);
       }
     },
+    // removeIngredient(state, action) {
+    //   state.ingredients = state.ingredients.filter(
+    //     (item) => item._id !== action.payload
+    //   );
+    // }
+
     removeIngredient(state, action) {
-      state.ingredients = state.ingredients.filter(
-        (item) => item.id !== action.payload
-      );
+      state.ingredients.splice(action.payload, 1);
     }
   }
 });
@@ -34,5 +38,7 @@ export const constructorSlice = createSlice({
 export const constructorReducer = constructorSlice.reducer;
 export const selectConstructorItems = (state: RootState) =>
   state.burgerConstructor;
+
+export const { removeIngredient } = constructorSlice.actions;
 
 export const { addIngredient } = constructorSlice.actions;

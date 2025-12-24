@@ -5,25 +5,16 @@ import styles from './constructor-page.module.css';
 import { BurgerIngredients } from '../../components';
 import { BurgerConstructor } from '../../components';
 import { Preloader } from '../../components/ui';
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import {
   fetchIngredients,
   isIngredientLoading,
   ingredientError
 } from '../../services/slices/ingredientSlice';
-import { useDispatch } from '../../services/store';
 
 export const ConstructorPage: FC = () => {
-  const dispatch = useDispatch();
-  /** TODO: взять переменную из стора
-   * ВЗЯЛ
-   */
   const isIngredientsLoading = useSelector(isIngredientLoading);
   const error = useSelector(ingredientError);
-
-  useEffect(() => {
-    dispatch(fetchIngredients());
-  }, [dispatch]);
 
   if (error) {
     return (

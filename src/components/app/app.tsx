@@ -15,14 +15,28 @@ import styles from './app.module.css';
 import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { ModalUI } from '@ui';
+import { ProtectedRoute } from '../../utils/protected-route';
+import { useDispatch, useSelector } from '../../services/store';
+import { useEffect } from 'react';
+import { fetchUser, selectIsAuth } from '../../services/slices/userSlice';
+import { fetchIngredients } from '../../services/slices/ingredientSlice';
 
 const App = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleClose = () => {
     navigate(-1);
   };
+
+  useEffect(() => {
+    dispatch(fetchUser());
+  }, [dispatch]);
+
+  useEffect(() => {
+      dispatch(fetchIngredients());
+    }, [dispatch]);
 
   const backgroundLocation = location.state?.background;
 
@@ -36,12 +50,34 @@ const App = () => {
         <Route path='/register' element={<Register />} />
         <Route path='/forgot-password' element={<ForgotPassword />} />
         <Route path='/reset-password' element={<ResetPassword />} />
-        <Route path='/profile' element={<Profile />} />
-        <Route path='/profile/orders' element={<ProfileOrders />} />
+        <Route
+          path='/profile'
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path='/profile/orders'
+          element={
+            <ProtectedRoute>
+              <ProfileOrders />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/profile/orders/:number'
+          element={
+            <ProtectedRoute>
+              <OrderInfo />
+            </ProtectedRoute>
+          }
+        />
 
         <Route path='/ingredients/:id' element={<IngredientDetails />} />
         <Route path='/feed/:number' element={<OrderInfo />} />
-        <Route path='/profile/orders/:number' element={<OrderInfo />} />
 
         <Route path='*' element={<NotFound404 />} />
       </Routes>
@@ -66,7 +102,7 @@ const App = () => {
           <Route
             path='/profile/orders/:number'
             element={
-              <ModalUI title='Номер' onClose={handleClose}>
+              <ModalUI title='Детали заказа' onClose={handleClose}>
                 <OrderInfo />
               </ModalUI>
             }

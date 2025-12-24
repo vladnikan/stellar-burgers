@@ -68,7 +68,7 @@ export const orderSlice = createSlice({
         state.error = null;
       })
       .addCase(createOrder.fulfilled, (state, action) => {
-        state.order.push(action.payload.order);
+        // state.order.push(action.payload.order);
         state.orderRequest = false;
         state.orderModalData = action.payload.order;
       })
