@@ -23,7 +23,7 @@ export const Feed: FC = () => {
   };
 
   if (!feed) {
-    return <Preloader/>;
+    return <Preloader />;
   }
 
   // const orders: TOrder[] = [];

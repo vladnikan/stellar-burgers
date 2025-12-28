@@ -35,8 +35,8 @@ const App = () => {
   }, [dispatch]);
 
   useEffect(() => {
-      dispatch(fetchIngredients());
-    }, [dispatch]);
+    dispatch(fetchIngredients());
+  }, [dispatch]);
 
   const backgroundLocation = location.state?.background;
 

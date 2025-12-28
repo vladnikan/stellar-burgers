@@ -2,13 +2,14 @@ import { FC, useMemo } from 'react';
 import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
-import { useSelector } from '../../services/store';
+import { useDispatch, useSelector } from '../../services/store';
 import { selectIngredients } from '../../services/slices/ingredientSlice';
 import { selectFeed } from '../../services/slices/feedSlice';
 import {
   selectOrderData,
   selectOrderModalData
 } from '../../services/slices/orderSlice';
+import { useParams } from 'react-router-dom';
 
 export const OrderInfo: FC = () => {
   /** TODO: взять переменные orderData и ingredients из стора */
@@ -22,11 +23,31 @@ export const OrderInfo: FC = () => {
   //   number: 0
   // };
 
-  const orderData = useSelector(selectOrderModalData);
+  // const ingredients: TIngredient[] = [];
+
+  const { number } = useParams<{ number: string }>();
+
+  const orderModalData = useSelector(selectOrderModalData);
+
+  const feedData = useSelector(selectFeed);
+
+  const userOrders = useSelector(selectOrderData);
 
   const ingredients = useSelector(selectIngredients);
 
-  // const ingredients: TIngredient[] = [];
+  let orderData = orderModalData;
+
+  if (!orderData && number) {
+    const orderNumber = Number(number);
+
+    orderData =
+      feedData?.orders.find((order) => order.number === orderNumber) || null;
+
+    if (!orderData) {
+      orderData =
+        userOrders.find((order) => order.number === orderNumber) || null;
+    }
+  }
 
   /* Готовим данные для отображения */
   const orderInfo = useMemo(() => {

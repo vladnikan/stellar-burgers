@@ -42,7 +42,6 @@ export const Profile: FC = () => {
         password: formValue.password
       })
     );
-    //ДОЛЖНЫ ПОЯВИТЬСЯ ЗАКАЗЫ!! ПРОВЕРИТЬ МОДАЛКУ ЗАКАЗОВ!! ИСПРАВИТЬ УДАЛЕНИЕ ИНГРЕДИЕНТОВ
   };
 
   const handleCancel = (e: SyntheticEvent) => {
