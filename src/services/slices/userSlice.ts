@@ -77,16 +77,6 @@ export const logout = createAsyncThunk('user/logout', async () => {
   deleteCookie('accessToken');
 });
 
-// export const forgotPassword = createAsyncThunk(
-//   'user/forgotPassword',
-//   async
-// )
-
-// export const resetPassword = createAsyncThunk(
-//   'user/reset',
-//   async
-// )
-
 export const updateUser = createAsyncThunk(
   'user/update',
   async (data: { name?: string; email?: string; password?: string }) => {
@@ -95,22 +85,10 @@ export const updateUser = createAsyncThunk(
   }
 );
 
-// export const logout = createAsyncThunk(
-//   'user/logout',
-//   async
-// )
-
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    // setUser(state, action) {
-    //   state.user = action.payload;
-    //   state.isAuth = true;
-    // },
-    // updateUser(state, action) {
-    //   state.user = action.payload;
-    // },
     logout(state) {
       (state.user = null), (state.isAuth = false);
     }
@@ -166,13 +144,9 @@ export const userSlice = createSlice({
   }
 });
 
-// export const { logout } = userSlice.actions;
-
 export const selectIsAuth = (state: RootState) => state.user.isAuth;
 export const selectUser = (state: RootState) => state.user.user;
 export const selectIsLoading = (state: RootState) => state.user.isLoading;
-
-//TODO: у нас уже есть состояние аунтификации, остается создать SecuredRoute, в который будем передавать это для нужных страниц, по идее, на этом мы закончим
-//в модалке заказов не отображается информация о заказе
+export const selectOrderData = (state: RootState) => state.order.order;
 
 export const userReducer = userSlice.reducer;
