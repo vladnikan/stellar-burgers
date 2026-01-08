@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TConstructorIngredient, TIngredient } from '@utils-types';
-import { RootState } from '../store';
+import { RootState } from '../../store';
 import { v4 as uuid } from 'uuid';
 
 interface ConstructorState {
@@ -37,7 +37,12 @@ export const constructorSlice = createSlice({
 
     removeIngredient(state, action: PayloadAction<number>) {
       state.ingredients.splice(action.payload, 1);
-    }
+    },
+    clearConstructor(state) {
+      state.bun = null;
+      state.ingredients = [];
+    },
+    switchIngredients(state) {}
   }
 });
 
@@ -48,3 +53,5 @@ export const selectConstructorItems = (state: RootState) =>
 export const { removeIngredient } = constructorSlice.actions;
 
 export const { addIngredient } = constructorSlice.actions;
+
+export const { clearConstructor } = constructorSlice.actions;

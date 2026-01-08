@@ -3,15 +3,15 @@ import { TConstructorIngredient } from '@utils-types';
 import { BurgerConstructorUI } from '@ui';
 import { useSelector, useDispatch } from '../../services/store';
 import { AppDispatch } from 'src/services/store';
-import { selectConstructorItems } from '../../services/slices/constructorSlice';
+import { selectConstructorItems } from '../../services/slices/constructorSlice/constructorSlice';
 import {
   clearOrderModal,
   createOrder,
   selectOrderModalData,
   selectOrderRequest
-} from '../../services/slices/orderSlice';
+} from '../../services/slices/orderSlice/orderSlice';
 import { useNavigate } from 'react-router-dom';
-import { selectIsAuth } from '../../services/slices/userSlice';
+import { selectIsAuth } from '../../services/slices/userSlice/userSlice';
 
 export const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
@@ -22,20 +22,6 @@ export const BurgerConstructor: FC = () => {
 
   const navigate = useNavigate();
   const user = useSelector(selectIsAuth);
-
-  /** TODO: взять переменные constructorItems, orderRequest и orderModalData из стора
-   * ВЗЯЛ
-   */
-  // const constructorItems = {
-  //   bun: {
-  //     price: 0
-  //   },
-  //   ingredients: []
-  // };
-
-  // const orderRequest = false;
-
-  // const orderModalData = null;
 
   const onOrderClick = () => {
     if (!user) {

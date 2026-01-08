@@ -3,28 +3,15 @@ import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
 import { useDispatch, useSelector } from '../../services/store';
-import { selectIngredients } from '../../services/slices/ingredientSlice';
-import { selectFeed } from '../../services/slices/feedSlice';
+import { selectIngredients } from '../../services/slices/ingredientSlice/ingredientSlice';
+import { selectFeed } from '../../services/slices/feedSlice/feedSlice';
 import {
   selectOrderData,
   selectOrderModalData
-} from '../../services/slices/orderSlice';
+} from '../../services/slices/orderSlice/orderSlice';
 import { useParams } from 'react-router-dom';
 
 export const OrderInfo: FC = () => {
-  /** TODO: взять переменные orderData и ingredients из стора */
-  // const orderData = {
-  //   createdAt: '',
-  //   ingredients: [],
-  //   _id: '',
-  //   status: '',
-  //   name: '',
-  //   updatedAt: 'string',
-  //   number: 0
-  // };
-
-  // const ingredients: TIngredient[] = [];
-
   const { number } = useParams<{ number: string }>();
 
   const orderModalData = useSelector(selectOrderModalData);

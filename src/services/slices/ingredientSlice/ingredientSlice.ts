@@ -1,13 +1,7 @@
-import { getIngredientsApi, orderBurgerApi } from '@api';
+import { getIngredientsApi } from '@api';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { TIngredient, TOrder } from '@utils-types';
-import { RootState } from '../store';
-
-type TCreateOrderResponse = {
-  success: boolean;
-  order: TOrder;
-  name: string;
-};
+import { RootState } from '../../store';
 
 interface IngredientsState {
   ingredients: TIngredient[];

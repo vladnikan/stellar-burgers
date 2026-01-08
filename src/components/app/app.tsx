@@ -18,8 +18,11 @@ import { ModalUI } from '@ui';
 import { ProtectedRoute } from '../../utils/protected-route';
 import { useDispatch, useSelector } from '../../services/store';
 import { useEffect } from 'react';
-import { fetchUser, selectIsAuth } from '../../services/slices/userSlice';
-import { fetchIngredients } from '../../services/slices/ingredientSlice';
+import {
+  fetchUser,
+  selectIsAuth
+} from '../../services/slices/userSlice/userSlice';
+import { fetchIngredients } from '../../services/slices/ingredientSlice/ingredientSlice';
 
 const App = () => {
   const location = useLocation();
