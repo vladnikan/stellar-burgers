@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import {
   fetchIngredients,
   selectIngredients
-} from '../../services/slices/ingredientSlice';
+} from '../../services/slices/ingredientSlice/ingredientSlice';
 import { useDispatch } from '../../services/store';
 
 export const IngredientDetails: FC = () => {

@@ -10,7 +10,7 @@ import {
   fetchIngredients,
   isIngredientLoading,
   ingredientError
-} from '../../services/slices/ingredientSlice';
+} from '../../services/slices/ingredientSlice/ingredientSlice';
 
 export const ConstructorPage: FC = () => {
   const isIngredientsLoading = useSelector(isIngredientLoading);

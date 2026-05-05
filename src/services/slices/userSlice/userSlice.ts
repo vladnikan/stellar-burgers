@@ -9,8 +9,8 @@ import {
 } from '@api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TUser } from '@utils-types';
-import { RootState } from '../store';
-import { deleteCookie, setCookie } from '../../utils/cookie';
+import { RootState } from '../../store';
+import { deleteCookie, setCookie } from '../../../utils/cookie';
 
 interface UserState {
   user: TUser | null;
@@ -140,6 +140,12 @@ export const userSlice = createSlice({
       .addCase(logout.fulfilled, (state, action) => {
         state.user = null;
         state.isAuth = false;
+      })
+
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.isLoading = false;
+        state.isAuth = true;
       });
   }
 });

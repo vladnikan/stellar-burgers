@@ -1,5 +1,8 @@
 import { Navigate } from 'react-router-dom';
-import { selectUser, selectIsLoading } from '../services/slices/userSlice';
+import {
+  selectUser,
+  selectIsLoading
+} from '../services/slices/userSlice/userSlice';
 import { useSelector } from '../services/store';
 import { Preloader } from '@ui';
 

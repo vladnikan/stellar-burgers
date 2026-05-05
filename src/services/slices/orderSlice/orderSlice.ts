@@ -1,7 +1,7 @@
 import { getOrdersApi, orderBurgerApi } from '@api';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { TIngredient, TOrder } from '@utils-types';
-import { RootState } from '../store';
+import { RootState } from '../../store';
 
 type TCreateOrderResponse = {
   success: boolean;
@@ -22,7 +22,6 @@ const initialState: OrdersState = {
   order: [],
   isLoading: true,
   error: null,
-
   orderRequest: false,
   orderModalData: null
 };
@@ -68,7 +67,6 @@ export const orderSlice = createSlice({
         state.error = null;
       })
       .addCase(createOrder.fulfilled, (state, action) => {
-        // state.order.push(action.payload.order);
         state.orderRequest = false;
         state.orderModalData = action.payload.order;
       })
